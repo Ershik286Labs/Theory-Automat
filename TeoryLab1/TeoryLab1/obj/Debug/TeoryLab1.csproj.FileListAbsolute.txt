@@ -1,0 +1,11 @@
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\bin\Debug\TeoryLab1.exe.config
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\bin\Debug\TeoryLab1.exe
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\bin\Debug\TeoryLab1.pdb
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\obj\Debug\TeoryLab1.csproj.AssemblyReference.cache
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\obj\Debug\TeoryLab1.Form1.resources
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\obj\Debug\TeoryLab1.Properties.Resources.resources
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\obj\Debug\TeoryLab1.csproj.GenerateResource.cache
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\obj\Debug\TeoryLab1.csproj.CoreCompileInputs.cache
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\obj\Debug\TeoryLab1.exe
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\obj\Debug\TeoryLab1.pdb
+C:\Users\Никита\source\repos\TeoryLab1\TeoryLab1\obj\Debug\TeoryLab1.exe.config
