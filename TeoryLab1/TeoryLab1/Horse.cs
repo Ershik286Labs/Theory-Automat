@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -9,8 +9,8 @@ namespace TeoryLab1 {
         const int spriteHeight = 4;
 
         public Horse(Color color, int number, string name) {
-            horseSprite = LoadHorseSprite(color);
             this.color = color;
+            horseSprite = LoadHorseSprite(color);
             this.number = number;
             this.name = name;
             this.position = 0;
@@ -48,18 +48,32 @@ namespace TeoryLab1 {
                 for (int y = 0; y < tinted.Height; y++) {
                     Color pixel = tinted.GetPixel(x, y);
 
-                    // Применяем tint только к непрозрачным пикселям
                     if (pixel.A > 0) {
-                        int r = (int)(pixel.R * (tintColor.R / 255f));
-                        int g = (int)(pixel.G * (tintColor.G / 255f));
-                        int b = (int)(pixel.B * (tintColor.B / 255f));
-
-                        tinted.SetPixel(x, y, Color.FromArgb(pixel.A, r, g, b));
+                        // Используем метод ShouldRecolorPixel для определения нужно ли перекрашивать
+                        if (ShouldRecolorPixel(pixel, x, y)) {
+                            int r = (int)(pixel.R * (tintColor.R / 255f));
+                            int g = (int)(pixel.G * (tintColor.G / 255f));
+                            int b = (int)(pixel.B * (tintColor.B / 255f));
+                            tinted.SetPixel(x, y, Color.FromArgb(pixel.A, r, g, b));
+                        }
                     }
                 }
             }
-
             return tinted;
+        }
+
+        private bool ShouldRecolorPixel(Color pixel, int x, int y) {
+            // 1. Проверка по цвету-маркеру (magenta)
+            if (pixel.R == 15 && pixel.G == 0 && pixel.B == 255) {
+                return true;
+            }
+
+            // 3. Проверка по яркости (светлые области)
+            if (pixel.GetBrightness() > 0.5f) {
+                return true;
+            }
+
+            return false;
         }
 
         private Bitmap CreateDefaultSprite(Color color) {
@@ -68,12 +82,9 @@ namespace TeoryLab1 {
             using (Graphics g = Graphics.FromImage(sprite))
             using (SolidBrush brush = new SolidBrush(color)) {
                 g.Clear(Color.Transparent);
-
-                // Простая векторная лошадь
                 g.FillEllipse(brush, 15, 25, 35, 20); // Тело
                 g.FillEllipse(brush, 45, 20, 15, 15); // Голова
 
-                // Ноги
                 g.FillRectangle(brush, 20, 45, 5, 15);
                 g.FillRectangle(brush, 35, 45, 5, 15);
                 g.FillRectangle(brush, 50, 45, 5, 15);
@@ -95,7 +106,7 @@ namespace TeoryLab1 {
             // Отладочная информация
             using (Font font = new Font("Arial", 8))
             using (SolidBrush brush = new SolidBrush(Color.Black)) {
-                g.DrawString($"{number}: {name}", font, brush, x, y - 15);
+                g.DrawString($"{number}: {name}", font, brush, x, y - 5);
                 g.DrawString($"Pos: {position}", font, brush, x, y + spriteHeight + 5);
             }
         }
@@ -104,6 +115,10 @@ namespace TeoryLab1 {
             if (position + move >= Map.distance) {
                 this.reach = true;
                 this.position = Map.distance;
+                Form1.winnerHorse.Add(this);
+                if (Form1.winnerHorse.Count == 10) {
+                    MessageBox.Show("Все лошадки добежали");
+                }
             }
             else {
                 this.position += move;
@@ -118,9 +133,11 @@ namespace TeoryLab1 {
         public string getName() { return name; }
         public int getPosition() { return position; }
         public bool hasReached() { return reach; }
+        public Color GetColor() { return color; }
 
         public void setName(string name) { this.name = name; }
         public void setPosition(int pos) { this.position = pos; }
         public void setNumber(int number) { this.number = number; }
+        public void setColor(Color color) { this.color = color; }
     }
 }
