@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +9,6 @@ namespace TeoryLab1 {
     internal class Map {
 
         public const int distance = 30;
-
+        public const int sizeMassiveHorse = 10;
     }
 }
