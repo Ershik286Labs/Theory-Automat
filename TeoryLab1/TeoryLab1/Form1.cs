@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,7 @@ namespace TeoryLab1 {
             if (stopFlag) return;
         }
 
+
         private void InitializeMap() {
             try {
                 string imagePath = Path.Combine(Application.StartupPath, "resourse", "image", "map.png");
@@ -57,6 +59,18 @@ namespace TeoryLab1 {
             }
             catch (Exception ex) {
                 MessageBox.Show($"Ошибка загрузки карты: {ex.Message}");
+            }
+        }
+
+        public static bool CheckInternetConnection() {
+            try {
+                using (Ping ping = new Ping()) {
+                    PingReply reply = ping.Send("8.8.8.8", 3000); // Google DNS
+                    return reply.Status == IPStatus.Success;
+                }
+            }
+            catch {
+                return false;
             }
         }
 
@@ -288,12 +302,40 @@ namespace TeoryLab1 {
 
         private void оРазработчикеToolStripMenuItem_Click(object sender, EventArgs e) {
             if (stopFlag) return;
-            Process.Start("https://github.com/Ershik286");
+            if (CheckInternetConnection()) {
+                Process.Start("https://github.com/Ershik286");
+            }
         }
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e) {
             if (stopFlag) return;
-            Process.Start("https://github.com/Ershik286Labs/Theory-Automat/blob/main/TeoryLab1/Inf.txt");
+            if (CheckInternetConnection()) {
+                //MessageBox.Show($"Как пользоваться программой\r\n" +
+                //    $"1. Кнопка Старт - запускает программу, Стоп - останавливает полностью программу.\r\n" +
+                //    $"2. Кнопка Пауза/продолжить по аналогии запускает или останавливает движение лошадок по экрану.\r\n" +
+                //    $"3. Ползунок в верхней-правой части экрана - регулирует скорость лошадей.\r\n" +
+                //    $"4. Кнопка сброс - запускает игру заного, сбрасывает все настройки у лошадей и заного их генерирует.\r\n" +
+                //    $"5. У каждой лошадки можно выбирать цвет, её номер и имя.\r\n  " +
+                //    $"5.1 Для выбора цвета - нажмите по лошадке Левой Кнопкой Мыши, либо нажмите кнопку \"Настройки\", затем \"Цвет\", затем выберайте желаемую лошадку, после откроется окно с выбором цвета.\r\n  " +
+                //    $"5.2 Для выбора номера - нажмите по кнопке \"Настройки\", затем \"Номер\", выберайте нужную лошадку и введите в появившееся серое окошечко желаемый номер\r\n  " +
+                //    $"5.3 Для выбора имени - нажмите по кнопке \"Настройки\", затем \"Имя\", выберайте нужную лошадку и введите в появившееся серое окошечко желаемый номер\r\n" +
+                //    $"6. Возможно сохранить настройки у лошадей. Возможно сохранение лишь одних настроек. При сохранении предыдущие настройки будут удалены. Сохранение происходит либо через комбинацию клавиш Ctrl + S, или: Нажатие на кнопку \"Файл\", \"Сохранить\"\r\n" +
+                //    $"7. Открытие настроек происходит через кнопки Ctrl + O, или через \"Файл\", \"Открыть\", затем выбирается текстовый файл settings.txt.");
+                Process.Start("https://github.com/Ershik286Labs/Theory-Automat/blob/main/TeoryLab1/readMe.txt");
+            }
+            else {
+                MessageBox.Show($"Как пользоваться программой\r\n" +
+                    $"1. Кнопка Старт - запускает программу, Стоп - останавливает полностью программу.\r\n" +
+                    $"2. Кнопка Пауза/продолжить по аналогии запускает или останавливает движение лошадок по экрану.\r\n" +
+                    $"3. Ползунок в верхней-правой части экрана - регулирует скорость лошадей.\r\n" +
+                    $"4. Кнопка сброс - запускает игру заного, сбрасывает все настройки у лошадей и заного их генерирует.\r\n" +
+                    $"5. У каждой лошадки можно выбирать цвет, её номер и имя.\r\n  " +
+                    $"5.1 Для выбора цвета - нажмите по лошадке Левой Кнопкой Мыши, либо нажмите кнопку \"Настройки\", затем \"Цвет\", затем выберайте желаемую лошадку, после откроется окно с выбором цвета.\r\n  " +
+                    $"5.2 Для выбора номера - нажмите по кнопке \"Настройки\", затем \"Номер\", выберайте нужную лошадку и введите в появившееся серое окошечко желаемый номер\r\n  " +
+                    $"5.3 Для выбора имени - нажмите по кнопке \"Настройки\", затем \"Имя\", выберайте нужную лошадку и введите в появившееся серое окошечко желаемый номер\r\n" +
+                    $"6. Возможно сохранить настройки у лошадей. Возможно сохранение лишь одних настроек. При сохранении предыдущие настройки будут удалены. Сохранение происходит либо через комбинацию клавиш Ctrl + S, или: Нажатие на кнопку \"Файл\", \"Сохранить\"\r\n" +
+                    $"7. Открытие настроек происходит через кнопки Ctrl + O, или через \"Файл\", \"Открыть\", затем выбирается текстовый файл settings.txt.");
+            }
         }
 
         private void MainForm_MouseDown(object sender, MouseEventArgs e) {
