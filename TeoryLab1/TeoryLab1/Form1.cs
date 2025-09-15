@@ -468,8 +468,9 @@ namespace TeoryLab1 {
 
         public void checkTrackBar() {
             if (!Program.timerIsRunning) return;
-            int selectedValue = trackBar1.Value + 1;
-            Program.aTimer.Interval = selectedValue * 100;
+            int selectedValue = trackBar1.Value;
+            Program.aTimer.Interval = Program.intervalTimer - selectedValue * 100 + 10;
         }
     }
 } 
+
